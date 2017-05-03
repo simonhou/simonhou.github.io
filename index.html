@@ -174,14 +174,8 @@
 </ul>
 <p>我司当前使用RDS字符集默认为<code>utf8_general_ci</code>。</p>
 <p><strong>解决方法</strong></p>
-<ol>
-<li><p>在查询语句中的列名前加<code>BINARY</code>关键字：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> TableA <span class="keyword">where</span> <span class="built_in">binary</span> columnA =<span class="string">'abc'</span>;</div><div class="line">+<span class="comment">------+</span></div><div class="line">| name |</div><div class="line">+<span class="comment">------+</span></div><div class="line">|  abc |</div><div class="line">+<span class="comment">------+</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>修改该字段的collation 为 binary:</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tbl_name <span class="keyword">MODIFY</span> <span class="keyword">COLUMN</span> col_name <span class="built_in">VARCHAR</span>(<span class="number">50</span>) <span class="built_in">BINARY</span> <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">COLLATE</span> utf8_bin <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>;</div></pre></td></tr></table></figure>
-</li>
-</ol>
+<p>1.在查询语句中的列名前加<code>BINARY</code>关键字：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> TableA <span class="keyword">where</span> <span class="built_in">binary</span> columnA =<span class="string">'abc'</span>;</div><div class="line">+<span class="comment">------+</span></div><div class="line">| name |</div><div class="line">+<span class="comment">------+</span></div><div class="line">|  abc |</div><div class="line">+<span class="comment">------+</span></div></pre></td></tr></table></figure></p>
+<p>2.修改该字段的collation 为 binary:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tbl_name <span class="keyword">MODIFY</span> <span class="keyword">COLUMN</span> col_name <span class="built_in">VARCHAR</span>(<span class="number">50</span>) <span class="built_in">BINARY</span> <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">COLLATE</span> utf8_bin <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>;</div></pre></td></tr></table></figure></p>
 <p>与MySQL不同，DB2，Oracle查询时是区分大小写的。这也不能说明区分大小写这块孰优孰劣，能否处理大小写，应主要还是业务需求驱动。</p>
 
       
