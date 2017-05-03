@@ -5,13 +5,17 @@
   
   <title>MySQL查询区分大小写 | 纵横杂记</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="在MySQL中，查询数据不分区大小写，例如：输入为abc,Abc或ABC都能查询同样的结果，说明查询条件对大小写不敏感。 举个列子：1234567SELECT NAME FROM reptest WHERE NAME=&apos;abc&apos;;+------+| name |+------+|  abc ||  AbC |+------+ 而字段值的大小写规则是由MySQL的collate控制的，collate">
+<meta name="keywords" content="MySQL">
+<meta property="og:type" content="article">
 <meta property="og:title" content="MySQL查询区分大小写">
 <meta property="og:url" content="https://simonhou.github.io/2017/05/03/MySQL查询区分大小写/index.html">
 <meta property="og:site_name" content="纵横杂记">
-<meta property="og:updated_time" content="2017-05-03T07:15:49.904Z">
+<meta property="og:description" content="在MySQL中，查询数据不分区大小写，例如：输入为abc,Abc或ABC都能查询同样的结果，说明查询条件对大小写不敏感。 举个列子：1234567SELECT NAME FROM reptest WHERE NAME=&apos;abc&apos;;+------+| name |+------+|  abc ||  AbC |+------+ 而字段值的大小写规则是由MySQL的collate控制的，collate">
+<meta property="og:updated_time" content="2017-05-03T07:42:30.294Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL查询区分大小写">
+<meta name="twitter:description" content="在MySQL中，查询数据不分区大小写，例如：输入为abc,Abc或ABC都能查询同样的结果，说明查询条件对大小写不敏感。 举个列子：1234567SELECT NAME FROM reptest WHERE NAME=&apos;abc&apos;;+------+| name |+------+|  abc ||  AbC |+------+ 而字段值的大小写规则是由MySQL的collate控制的，collate">
   
     <link rel="alternate" href="/atom.xml" title="纵横杂记" type="application/atom+xml">
   
@@ -49,9 +53,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://simonhou.github.io"></form>
@@ -82,27 +86,38 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>在MySQL中，查询数据不分区大小写，例如：输入为abc,Abc或ABC都能查询同样的结果，说明查询条件对大小写不敏感。</p>
+<p>举个列子：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">NAME</span> <span class="keyword">FROM</span> reptest <span class="keyword">WHERE</span> <span class="keyword">NAME</span>=<span class="string">'abc'</span>;</div><div class="line">+<span class="comment">------+</span></div><div class="line">| name |</div><div class="line">+<span class="comment">------+</span></div><div class="line">|  abc |</div><div class="line">|  AbC |</div><div class="line">+<span class="comment">------+</span></div></pre></td></tr></table></figure></p>
+<p>而字段值的大小写规则是由MySQL的collate控制的，collate是字符集内用于比较字符的一套规则，其命名规则通常为字符集名+语言名+collate规则。以utf8字符集为例:</p>
+<ul>
+<li><code>utf8_general_bin</code>: 表示的是binary case sensitive collation，也就是说是区分大小写。</li>
+<li><code>utf8_general_cs</code>: case sensitive collation，区分大小写。</li>
+<li><code>utf8_general_ci</code>: case insensitive collation，不区分大小写。</li>
+</ul>
+<p>我司当前使用RDS字符集默认为<code>utf8_general_ci</code>。</p>
+<p><strong>解决方法</strong></p>
+<ol>
+<li><p>在查询语句中的列名前加<code>BINARY</code>关键字：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> TableA <span class="keyword">where</span> <span class="built_in">binary</span> columnA =<span class="string">'abc'</span>;</div><div class="line">+<span class="comment">------+</span></div><div class="line">| name |</div><div class="line">+<span class="comment">------+</span></div><div class="line">|  abc |</div><div class="line">+<span class="comment">------+</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>修改该字段的collation 为 binary:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tbl_name <span class="keyword">MODIFY</span> <span class="keyword">COLUMN</span> col_name <span class="built_in">VARCHAR</span>(<span class="number">50</span>) <span class="built_in">BINARY</span> <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">COLLATE</span> utf8_bin <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>与MySQL不同，DB2，Oracle查询时是区分大小写的。这也不能说明区分大小写这块孰优孰劣，能否处理大小写，应主要还是业务需求驱动。</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://simonhou.github.io/2017/05/03/MySQL查询区分大小写/" data-id="cj28o6cho000004owb0vdkc42" class="article-share-link">Share</a>
+      <a data-url="https://simonhou.github.io/2017/05/03/MySQL查询区分大小写/" data-id="cj28odpi60000aoowmaao2a8o" class="article-share-link">Partager</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li></ul>
+
     </footer>
   </div>
   
     
-<nav id="article-nav">
-  
-  
-    <a href="/2017/05/03/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
-    </a>
-  
-</nav>
-
   
 </article>
 
@@ -114,9 +129,23 @@
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
@@ -130,16 +159,12 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
           <li>
             <a href="/2017/05/03/MySQL查询区分大小写/">MySQL查询区分大小写</a>
-          </li>
-        
-          <li>
-            <a href="/2017/05/03/hello-world/">Hello World</a>
           </li>
         
       </ul>
@@ -155,7 +180,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 hackergodness<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
