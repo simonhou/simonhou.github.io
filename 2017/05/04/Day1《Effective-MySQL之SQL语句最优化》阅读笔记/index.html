@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="https://simonhou.github.io">
   <title>Day1《Effective MySQL之SQL语句最优化》阅读笔记 | 纵横杂记</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Day 1：《Effective MySQL之SQL语句最优化》读书笔记 第一章 DBA五分钟速成1.1 识别性能问题用户报告应用程序太慢，在确定不存在物理系统资源瓶颈后（CPU，IO，MEM飙升），就应该把注意力转向MySQL数据库。 1.1.1 寻找运行缓慢的SQL语句">
+  <meta name="description" content="第一章 DBA五分钟速成1.1 识别性能问题用户报告应用程序太慢，在确定不存在物理系统资源瓶颈后（CPU，IO，MEM飙升），就应该把注意力转向MySQL数据库。 1.1.1 寻找运行缓慢的SQL语句">
 <meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Day1《Effective MySQL之SQL语句最优化》阅读笔记">
 <meta property="og:url" content="https://simonhou.github.io/2017/05/04/Day1《Effective-MySQL之SQL语句最优化》阅读笔记/index.html">
 <meta property="og:site_name" content="纵横杂记">
-<meta property="og:description" content="Day 1：《Effective MySQL之SQL语句最优化》读书笔记 第一章 DBA五分钟速成1.1 识别性能问题用户报告应用程序太慢，在确定不存在物理系统资源瓶颈后（CPU，IO，MEM飙升），就应该把注意力转向MySQL数据库。 1.1.1 寻找运行缓慢的SQL语句">
-<meta property="og:updated_time" content="2017-05-04T06:41:01.321Z">
+<meta property="og:description" content="第一章 DBA五分钟速成1.1 识别性能问题用户报告应用程序太慢，在确定不存在物理系统资源瓶颈后（CPU，IO，MEM飙升），就应该把注意力转向MySQL数据库。 1.1.1 寻找运行缓慢的SQL语句">
+<meta property="og:updated_time" content="2017-05-04T06:49:45.372Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Day1《Effective MySQL之SQL语句最优化》阅读笔记">
-<meta name="twitter:description" content="Day 1：《Effective MySQL之SQL语句最优化》读书笔记 第一章 DBA五分钟速成1.1 识别性能问题用户报告应用程序太慢，在确定不存在物理系统资源瓶颈后（CPU，IO，MEM飙升），就应该把注意力转向MySQL数据库。 1.1.1 寻找运行缓慢的SQL语句">
+<meta name="twitter:description" content="第一章 DBA五分钟速成1.1 识别性能问题用户报告应用程序太慢，在确定不存在物理系统资源瓶颈后（CPU，IO，MEM飙升），就应该把注意力转向MySQL数据库。 1.1.1 寻找运行缓慢的SQL语句">
   
     <link rel="alternative" href="/atom.xml" title="纵横杂记" type="application/atom+xml">
   
@@ -166,8 +166,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Day 1：《Effective MySQL之SQL语句最优化》读书笔记</p>
-<h1 id="第一章-DBA五分钟速成"><a href="#第一章-DBA五分钟速成" class="headerlink" title="第一章 DBA五分钟速成"></a>第一章 DBA五分钟速成</h1><h2 id="1-1-识别性能问题"><a href="#1-1-识别性能问题" class="headerlink" title="1.1 识别性能问题"></a>1.1 识别性能问题</h2><p>用户报告应用程序太慢，在确定不存在物理系统资源瓶颈后（CPU，IO，MEM飙升），就应该把注意力转向MySQL数据库。</p>
+        <h1 id="第一章-DBA五分钟速成"><a href="#第一章-DBA五分钟速成" class="headerlink" title="第一章 DBA五分钟速成"></a>第一章 DBA五分钟速成</h1><h2 id="1-1-识别性能问题"><a href="#1-1-识别性能问题" class="headerlink" title="1.1 识别性能问题"></a>1.1 识别性能问题</h2><p>用户报告应用程序太慢，在确定不存在物理系统资源瓶颈后（CPU，IO，MEM飙升），就应该把注意力转向MySQL数据库。</p>
 <h3 id="1-1-1-寻找运行缓慢的SQL语句"><a href="#1-1-1-寻找运行缓慢的SQL语句" class="headerlink" title="1.1.1 寻找运行缓慢的SQL语句"></a>1.1.1 寻找运行缓慢的SQL语句</h3><a id="more"></a>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show full processlist\G</div><div class="line">*************************** 1. row ***************************</div><div class="line">     Id: 6</div><div class="line">   User: root</div><div class="line">   Host: localhost</div><div class="line">     db: NULL</div><div class="line">Command: Query</div><div class="line">   Time: 0</div><div class="line">  State: starting</div><div class="line">   Info: show full processlist</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure>
 <p>从Time列可以读出info中的SQL具体运行时间。</p>
