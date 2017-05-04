@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://simonhou.github.io">
-  <title>Archives: 2017/5 | 纵横杂记</title>
+  <title>Day1《Effective MySQL之SQL语句最优化》阅读笔记 | 纵横杂记</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="DBA, DB2, MySQL, Couchbase, Python">
-<meta property="og:type" content="website">
-<meta property="og:title" content="纵横杂记">
-<meta property="og:url" content="https://simonhou.github.io/archives/2017/05/index.html">
+  <meta name="description" content="Day 1：《Effective MySQL之SQL语句最优化》读书笔记 第一章 DBA五分钟速成1.1 识别性能问题用户报告应用程序太慢，在确定不存在物理系统资源瓶颈后（CPI，IO，MEM飙升），就应该把注意力转向MySQL数据库。 1.1.1 寻找运行缓慢的SQL语句1234567891011mysql&amp;gt; show full processlist\G*****************">
+<meta name="keywords" content="MySQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Day1《Effective MySQL之SQL语句最优化》阅读笔记">
+<meta property="og:url" content="https://simonhou.github.io/2017/05/04/Day1《Effective-MySQL之SQL语句最优化》阅读笔记/index.html">
 <meta property="og:site_name" content="纵横杂记">
+<meta property="og:description" content="Day 1：《Effective MySQL之SQL语句最优化》读书笔记 第一章 DBA五分钟速成1.1 识别性能问题用户报告应用程序太慢，在确定不存在物理系统资源瓶颈后（CPI，IO，MEM飙升），就应该把注意力转向MySQL数据库。 1.1.1 寻找运行缓慢的SQL语句1234567891011mysql&amp;gt; show full processlist\G*****************">
+<meta property="og:updated_time" content="2017-05-04T06:29:24.636Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="纵横杂记">
+<meta name="twitter:title" content="Day1《Effective MySQL之SQL语句最优化》阅读笔记">
+<meta name="twitter:description" content="Day 1：《Effective MySQL之SQL语句最优化》读书笔记 第一章 DBA五分钟速成1.1 识别性能问题用户报告应用程序太慢，在确定不存在物理系统资源瓶颈后（CPI，IO，MEM飙升），就应该把注意力转向MySQL数据库。 1.1.1 寻找运行缓慢的SQL语句1234567891011mysql&amp;gt; show full processlist\G*****************">
   
     <link rel="alternative" href="/atom.xml" title="纵横杂记" type="application/atom+xml">
   
@@ -142,36 +146,83 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-Day1《Effective-MySQL之SQL语句最优化》阅读笔记" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      Day1《Effective MySQL之SQL语句最优化》阅读笔记
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/05/04/Day1《Effective-MySQL之SQL语句最优化》阅读笔记/" class="archive-article-date">
+
+        
+        <a href="/2017/05/04/Day1《Effective-MySQL之SQL语句最优化》阅读笔记/" class="archive-article-date">
   	<time datetime="2017-05-04T06:28:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-04</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/04/Day1《Effective-MySQL之SQL语句最优化》阅读笔记/">Day1《Effective MySQL之SQL语句最优化》阅读笔记</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Day 1：《Effective MySQL之SQL语句最优化》读书笔记</p>
+<h1 id="第一章-DBA五分钟速成"><a href="#第一章-DBA五分钟速成" class="headerlink" title="第一章 DBA五分钟速成"></a>第一章 DBA五分钟速成</h1><h2 id="1-1-识别性能问题"><a href="#1-1-识别性能问题" class="headerlink" title="1.1 识别性能问题"></a>1.1 识别性能问题</h2><p>用户报告应用程序太慢，在确定不存在物理系统资源瓶颈后（CPI，IO，MEM飙升），就应该把注意力转向MySQL数据库。</p>
+<h3 id="1-1-1-寻找运行缓慢的SQL语句"><a href="#1-1-1-寻找运行缓慢的SQL语句" class="headerlink" title="1.1.1 寻找运行缓慢的SQL语句"></a>1.1.1 寻找运行缓慢的SQL语句</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show full processlist\G</div><div class="line">*************************** 1. row ***************************</div><div class="line">     Id: 6</div><div class="line">   User: root</div><div class="line">   Host: localhost</div><div class="line">     db: NULL</div><div class="line">Command: Query</div><div class="line">   Time: 0</div><div class="line">  State: starting</div><div class="line">   Info: show full processlist</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure>
+<p>从Time列可以读出info中的SQL具体运行时间。</p>
+<h3 id="1-1-2-确认低效查询"><a href="#1-1-2-确认低效查询" class="headerlink" title="1.1.2 确认低效查询"></a>1.1.2 确认低效查询</h3><p>发现潜在的低效查询后，首先确认这个查询是否每次重复执行都很缓慢。需要验证这个低效查询并不是由于锁定或者系统瓶颈等因素导致的个别现象。</p>
+<ol>
+<li><p>运行SQL语句并记录执行时间</p>
+<p>直接在命令行里运行select语句是最简单的方法。</p>
+</li>
+<li><p>生成查询执行计划（QEP）</p>
+<p>使用EXPLAIN。大多数情况下EXPLAIN并不运行实际的SQL查询，然而优化器需要执行这条SQL语句的一部分来决定如何构造QEP时也有例外，例如在FROM字句中使用派生表（select_type中为DERIVED）。</p>
+</li>
+</ol>
+<h2 id="1-2-优化查询"><a href="#1-2-优化查询" class="headerlink" title="1.2 优化查询"></a>1.2 优化查询</h2><h3 id="1-2-1-不应该做的事"><a href="#1-2-1-不应该做的事" class="headerlink" title="1.2.1 不应该做的事"></a>1.2.1 不应该做的事</h3><p>在毫无头绪可循的时候，可能会想到在这个基于where语句的表上添加一个索引。</p>
+<p><strong>在没有进一步验证的情况下，千万不要在生产环境中这样做</strong></p>
+<p>如果添加索引执行时间很长，会阻塞其它如select的操作</p>
+<h3 id="1-2-2-确认优化"><a href="#1-2-2-确认优化" class="headerlink" title="1.2.2 确认优化"></a>1.2.2 确认优化</h3><p>再次执行，看加索引后时间是否有改善。</p>
+<h3 id="1-2-3-正确的方式"><a href="#1-2-3-正确的方式" class="headerlink" title="1.2.3 正确的方式"></a>1.2.3 正确的方式</h3><p>决定添加索引前，首先验证表的结构，然后确认表大小：<br>SHOW CREATE TABLE sss\G<br>SHOW TABLE STATUS like ‘sss’\G</p>
+<h1 id="第二章-基本的分析命令"><a href="#第二章-基本的分析命令" class="headerlink" title="第二章 基本的分析命令"></a>第二章 基本的分析命令</h1><h2 id="2-1-EXPLAIN命令"><a href="#2-1-EXPLAIN命令" class="headerlink" title="2.1 EXPLAIN命令"></a>2.1 EXPLAIN命令</h2><p>EXPLAIN产生的QEP可以获得很多可能被优化器考虑到的访问策略细节，以及当运行SQL语句时哪种策略预计会被优化器采用。</p>
+<h3 id="2-1-1-EXPLAIN-PARTITIONS命令"><a href="#2-1-1-EXPLAIN-PARTITIONS命令" class="headerlink" title="2.1.1 EXPLAIN PARTITIONS命令"></a>2.1.1 EXPLAIN PARTITIONS命令</h3><p>用于满足在partitions列中的查询的特定表分区提供附加信息。</p>
+<h3 id="2-1-2-EXPLAIN-EXTENDED命令"><a href="#2-1-2-EXPLAIN-EXTENDED命令" class="headerlink" title="2.1.2 EXPLAIN EXTENDED命令"></a>2.1.2 EXPLAIN EXTENDED命令</h3><p>提供额外的filtered列。EXTENDED关键字还能解释一些其它问题，通过SHOW WARNINGS查看。</p>
+<h2 id="2-2-SHOW-CREATE-TABLE命令"><a href="#2-2-SHOW-CREATE-TABLE命令" class="headerlink" title="2.2 SHOW CREATE TABLE命令"></a>2.2 SHOW CREATE TABLE命令</h2><p>查看表，列，索引信息。</p>
+<p>还可以通过mysqldump -u user -p  –no-data <name-of-schema> &gt; schema.sql查看。</name-of-schema></p>
+<h2 id="2-3-SHOW-INDEXES命令"><a href="#2-3-SHOW-INDEXES命令" class="headerlink" title="2.3 SHOW INDEXES命令"></a>2.3 SHOW INDEXES命令</h2><p>查看索引类型和索引基数。</p>
+<p>重点关注输出中的CARDINALITY这一值，代表索引中每一列唯一值的数量的估计值。</p>
+<h2 id="2-4-SHOW-TABLE-STATUS命令"><a href="#2-4-SHOW-TABLE-STATUS命令" class="headerlink" title="2.4 SHOW TABLE STATUS命令"></a>2.4 SHOW TABLE STATUS命令</h2><p>查看数据库表的底层大小以及表结构，包括存储引擎类型，版本，数据和索引大小，行的平均长度以及行数。</p>
+<h2 id="2-5-SHOW-STATUS命令"><a href="#2-5-SHOW-STATUS命令" class="headerlink" title="2.5 SHOW STATUS命令"></a>2.5 SHOW STATUS命令</h2><p>SHOW [GLOBAL|SESSION] STATUS 查看MySQL服务器的当前内部状态信息。</p>
+<h2 id="2-6-SHOW-VARIABLES命令"><a href="#2-6-SHOW-VARIABLES命令" class="headerlink" title="2.6 SHOW VARIABLES命令"></a>2.6 SHOW VARIABLES命令</h2><p>查看MySQL系统变量的当前值。</p>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -183,57 +234,89 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://simonhou.github.io/2017/05/04/Day1《Effective-MySQL之SQL语句最优化》阅读笔记/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/05/03/MySQL查询区分大小写/" class="archive-article-date">
-  	<time datetime="2017-05-03T07:15:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-03</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/03/MySQL查询区分大小写/">MySQL查询区分大小写</a>
-    </h1>
+  
+    <a href="/2017/05/03/MySQL查询区分大小写/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MySQL查询区分大小写</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+  
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -256,8 +339,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
