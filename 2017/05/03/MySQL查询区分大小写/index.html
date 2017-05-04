@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="https://simonhou.github.io">
   <title>MySQL查询区分大小写 | 纵横杂记</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在MySQL中，查询数据不分区大小写，例如：输入为abc,Abc或ABC都能查询同样的结果，说明查询条件对大小写不敏感。 举个列子：1234567SELECT NAME FROM reptest WHERE NAME=&apos;abc&apos;;+------+| name |+------+|  abc ||  AbC |+------+ 而字段值的大小写规则是由MySQL的collate控制的，collate">
+  <meta name="description" content="在MySQL中，查询数据不分区大小写，例如：输入为abc,Abc或ABC都能查询同样的结果，说明查询条件对大小写不敏感。">
 <meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL查询区分大小写">
 <meta property="og:url" content="https://simonhou.github.io/2017/05/03/MySQL查询区分大小写/index.html">
 <meta property="og:site_name" content="纵横杂记">
-<meta property="og:description" content="在MySQL中，查询数据不分区大小写，例如：输入为abc,Abc或ABC都能查询同样的结果，说明查询条件对大小写不敏感。 举个列子：1234567SELECT NAME FROM reptest WHERE NAME=&apos;abc&apos;;+------+| name |+------+|  abc ||  AbC |+------+ 而字段值的大小写规则是由MySQL的collate控制的，collate">
-<meta property="og:updated_time" content="2017-05-03T08:37:14.671Z">
+<meta property="og:description" content="在MySQL中，查询数据不分区大小写，例如：输入为abc,Abc或ABC都能查询同样的结果，说明查询条件对大小写不敏感。">
+<meta property="og:updated_time" content="2017-05-04T06:42:03.759Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL查询区分大小写">
-<meta name="twitter:description" content="在MySQL中，查询数据不分区大小写，例如：输入为abc,Abc或ABC都能查询同样的结果，说明查询条件对大小写不敏感。 举个列子：1234567SELECT NAME FROM reptest WHERE NAME=&apos;abc&apos;;+------+| name |+------+|  abc ||  AbC |+------+ 而字段值的大小写规则是由MySQL的collate控制的，collate">
+<meta name="twitter:description" content="在MySQL中，查询数据不分区大小写，例如：输入为abc,Abc或ABC都能查询同样的结果，说明查询条件对大小写不敏感。">
   
     <link rel="alternative" href="/atom.xml" title="纵横杂记" type="application/atom+xml">
   
@@ -166,8 +166,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在MySQL中，查询数据不分区大小写，例如：输入为abc,Abc或ABC都能查询同样的结果，说明查询条件对大小写不敏感。</p>
-<p>举个列子：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">NAME</span> <span class="keyword">FROM</span> reptest <span class="keyword">WHERE</span> <span class="keyword">NAME</span>=<span class="string">'abc'</span>;</div><div class="line">+<span class="comment">------+</span></div><div class="line">| name |</div><div class="line">+<span class="comment">------+</span></div><div class="line">|  abc |</div><div class="line">|  AbC |</div><div class="line">+<span class="comment">------+</span></div></pre></td></tr></table></figure></p>
+        <p>在MySQL中，查询数据不分区大小写，例如：输入为abc,Abc或ABC都能查询同样的结果，说明查询条件对大小写不敏感。<br><a id="more"></a><br>举个列子：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">NAME</span> <span class="keyword">FROM</span> reptest <span class="keyword">WHERE</span> <span class="keyword">NAME</span>=<span class="string">'abc'</span>;</div><div class="line">+<span class="comment">------+</span></div><div class="line">| name |</div><div class="line">+<span class="comment">------+</span></div><div class="line">|  abc |</div><div class="line">|  AbC |</div><div class="line">+<span class="comment">------+</span></div></pre></td></tr></table></figure></p>
 <p>而字段值的大小写规则是由MySQL的collate控制的，collate是字符集内用于比较字符的一套规则，其命名规则通常为字符集名+语言名+collate规则。以utf8字符集为例:</p>
 <ul>
 <li><code>utf8_general_bin</code>: 表示的是binary case sensitive collation，也就是说是区分大小写。</li>
@@ -335,7 +334,7 @@
 		open_in_new: false,
 		root: "/",
 		innerArchive: true,
-		showTags: false
+		showTags: true
 	}
 </script>
 
@@ -450,26 +449,6 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
           
             <li class="search-li">
               <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接1</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接2</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接3</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接4</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接5</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接6</a>
             </li>
           
         </ul>

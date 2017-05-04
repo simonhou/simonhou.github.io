@@ -227,20 +227,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在MySQL中，查询数据不分区大小写，例如：输入为abc,Abc或ABC都能查询同样的结果，说明查询条件对大小写不敏感。</p>
-<p>举个列子：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">NAME</span> <span class="keyword">FROM</span> reptest <span class="keyword">WHERE</span> <span class="keyword">NAME</span>=<span class="string">'abc'</span>;</div><div class="line">+<span class="comment">------+</span></div><div class="line">| name |</div><div class="line">+<span class="comment">------+</span></div><div class="line">|  abc |</div><div class="line">|  AbC |</div><div class="line">+<span class="comment">------+</span></div></pre></td></tr></table></figure></p>
-<p>而字段值的大小写规则是由MySQL的collate控制的，collate是字符集内用于比较字符的一套规则，其命名规则通常为字符集名+语言名+collate规则。以utf8字符集为例:</p>
-<ul>
-<li><code>utf8_general_bin</code>: 表示的是binary case sensitive collation，也就是说是区分大小写。</li>
-<li><code>utf8_general_cs</code>: case sensitive collation，区分大小写。</li>
-<li><code>utf8_general_ci</code>: case insensitive collation，不区分大小写。</li>
-</ul>
-<p>我司当前使用RDS字符集默认为<code>utf8_general_ci</code>。</p>
-<p><strong>解决方法</strong></p>
-<p>1.在查询语句中的列名前加<code>BINARY</code>关键字：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> TableA <span class="keyword">where</span> <span class="built_in">binary</span> columnA =<span class="string">'abc'</span>;</div><div class="line">+<span class="comment">------+</span></div><div class="line">| name |</div><div class="line">+<span class="comment">------+</span></div><div class="line">|  abc |</div><div class="line">+<span class="comment">------+</span></div></pre></td></tr></table></figure></p>
-<p>2.修改该字段的collation 为 binary:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tbl_name <span class="keyword">MODIFY</span> <span class="keyword">COLUMN</span> col_name <span class="built_in">VARCHAR</span>(<span class="number">50</span>) <span class="built_in">BINARY</span> <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">COLLATE</span> utf8_bin <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>;</div></pre></td></tr></table></figure></p>
-<p>与MySQL不同，DB2，Oracle查询时是区分大小写的。这也不能说明区分大小写这块孰优孰劣，能否处理大小写，应主要还是业务需求驱动。</p>
-
+        <p>在MySQL中，查询数据不分区大小写，例如：输入为abc,Abc或ABC都能查询同样的结果，说明查询条件对大小写不敏感。<br>
+        
+          <a class="article-more-a" href="/2017/05/03/MySQL查询区分大小写/#more">more >></a>
+        
       
 
       
@@ -308,7 +298,7 @@
 		open_in_new: false,
 		root: "/",
 		innerArchive: true,
-		showTags: false
+		showTags: true
 	}
 </script>
 
@@ -423,26 +413,6 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
           
             <li class="search-li">
               <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接1</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接2</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接3</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接4</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接5</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接6</a>
             </li>
           
         </ul>
